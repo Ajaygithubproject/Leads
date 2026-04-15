@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maverick Ghouse — Leads CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --primary: #2F6FED;
+  --primary-dark: #1a52c8;
+  --primary-light: #e8f0fd;
+  --secondary: #F5F7FA;
+  --white: #ffffff;
+  --rnr: #FF4D4F;
+  --not-interested: #FA8C16;
+  --switch-off: #8C8C8C;
+  --others: #1890FF;
+  --success: #52C41A;
+  --text-primary: #1a1d2e;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --border: #e5e9f0;
+  --sidebar-w: 240px;
+  --sidebar-collapsed: 68px;
+  --navbar-h: 64px;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 2px 12px rgba(47,111,237,0.08);
+  --shadow-md: 0 4px 24px rgba(47,111,237,0.12);
+  --shadow-lg: 0 8px 40px rgba(47,111,237,0.16);
+  --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  /* Dark mode */
+  --bg: #f0f4fc;
+  --card-bg: #ffffff;
+  --sidebar-bg: #0f1b35;
+  --sidebar-text: rgba(255,255,255,0.75);
+  --sidebar-active: #2F6FED;
+}
+[data-theme="dark"] {
+  --bg: #0d1117;
+  --card-bg: #161b27;
+  --secondary: #1a2035;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --border: #30363d;
+  --shadow: 0 2px 12px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 24px rgba(0,0,0,0.4);
+  --primary-light: #1a2a4a;
+  --sidebar-bg: #0d1117;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text-primary);min-height:100vh;overflow-x:hidden;transition:var(--transition)}
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+/* ═══════════════════════ LOGIN ═══════════════════════ */
+#loginPage{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background: 
+    linear-gradient(135deg, rgba(15,27,53,0.7), rgba(47,111,237,0.6)),
+    url('https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1920') no-repeat center/cover;
+
+  animation: zoomBg 20s infinite alternate ease-in-out;
+}
+
+@keyframes zoomBg{
+  0%{ background-size: 100%; }
+  100%{ background-size: 110%; }
+}
+#loginPage{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f1b35 0%,#1a3a6e 40%,#2F6FED 100%);transition:opacity 0.5s ease}
+#loginPage::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.login-card{position:relative;background:rgba(255,255,255,0.07);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.15);border-radius:24px;padding:48px 40px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.4);animation:loginIn 0.6s ease}
+@keyframes loginIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.login-logo{text-align:center;margin-bottom:32px}
+.login-logo .logo-icon{width:56px;height:56px;background:linear-gradient(135deg,#2F6FED,#1890FF);border-radius:16px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:0 8px 24px rgba(47,111,237,0.4)}
+.login-logo .logo-icon i{font-size:24px;color:#fff}
+.login-logo h1{font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.5px}
+.login-logo p{font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px}
+.form-group{margin-bottom:20px;position:relative}
+.form-group label{display:block;font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase}
+.form-group input{width:100%;padding:13px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-family:inherit;font-size:14px;outline:none;transition:var(--transition)}
+.form-group input::placeholder{color:rgba(255,255,255,0.35)}
+.form-group input:focus{border-color:rgba(47,111,237,0.8);background:rgba(255,255,255,0.12);box-shadow:0 0 0 3px rgba(47,111,237,0.2)}
+.input-icon-right{position:absolute;right:14px;bottom:13px;color:rgba(255,255,255,0.4);cursor:pointer;font-size:15px;transition:var(--transition)}
+.input-icon-right:hover{color:rgba(255,255,255,0.8)}
+.form-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.checkbox-label{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.6);cursor:pointer}
+.checkbox-label input{width:16px;height:16px;accent-color:#2F6FED;cursor:pointer}
+.forgot-link{font-size:13px;color:#7eb3ff;text-decoration:none;transition:color 0.2s}
+.forgot-link:hover{color:#fff}
+.btn-login{width:100%;padding:14px;background:linear-gradient(135deg,#2F6FED,#1890FF);border:none;border-radius:10px;color:#fff;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:var(--transition);position:relative;overflow:hidden}
+.btn-login:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(47,111,237,0.5)}
+.btn-login:active{transform:translateY(0)}
+.btn-login .btn-loader{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ═══════════════════════ APP SHELL ═══════════════════════ */
+#app{display:none;min-height:100vh}
+#app.visible{display:flex;flex-direction:column}
+
+/* ── NAVBAR ── */
+.navbar{position:fixed;top:0;left:0;right:0;height:var(--navbar-h);background:var(--card-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:200;gap:16px;transition:var(--transition);box-shadow:var(--shadow)}
+.navbar-left{display:flex;align-items:center;gap:12px;width:var(--sidebar-w);min-width:var(--sidebar-w);transition:width 0.3s}
+.sidebar-toggle{width:36px;height:36px;border:none;background:transparent;border-radius:8px;cursor:pointer;color:var(--text-secondary);display:flex;align-items:center;justify-content:center;transition:var(--transition);font-size:16px}
+.sidebar-toggle:hover{background:var(--secondary);color:var(--primary)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{width:32px;height:32px;background:linear-gradient(135deg,#2F6FED,#1890FF);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark i{font-size:15px;color:#fff}
+.logo-text{font-size:14px;font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden}
+.logo-text span{color:var(--primary)}
+.navbar-search{flex:1;max-width:400px;position:relative}
+.navbar-search input{width:100%;padding:9px 16px 9px 40px;background:var(--secondary);border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:13px;color:var(--text-primary);outline:none;transition:var(--transition)}
+.navbar-search input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-light);background:var(--card-bg)}
+.navbar-search i{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px}
+.navbar-right{display:flex;align-items:center;gap:8px;margin-left:auto}
+.nav-icon-btn{width:36px;height:36px;border:none;background:transparent;border-radius:8px;cursor:pointer;color:var(--text-secondary);display:flex;align-items:center;justify-content:center;transition:var(--transition);position:relative;font-size:15px}
+.nav-icon-btn:hover{background:var(--secondary);color:var(--primary)}
+.notif-badge{position:absolute;top:6px;right:6px;width:8px;height:8px;background:#FF4D4F;border-radius:50%;border:2px solid var(--card-bg)}
+.theme-toggle{padding:0 12px;width:auto;gap:6px;font-size:13px;font-weight:500;font-family:inherit}
+.user-avatar{width:36px;height:36px;background:linear-gradient(135deg,#2F6FED,#1890FF);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;cursor:pointer;transition:var(--transition)}
+.user-avatar:hover{transform:scale(1.05)}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;left:0;top:var(--navbar-h);bottom:0;width:var(--sidebar-w);background:var(--sidebar-bg);display:flex;flex-direction:column;z-index:150;transition:width 0.3s cubic-bezier(0.4,0,0.2,1);overflow:hidden}
+.sidebar.collapsed{width:var(--sidebar-collapsed)}
+.sidebar-nav{flex:1;padding:16px 10px;overflow-y:auto;overflow-x:hidden}
+.nav-section-label{font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin:12px 0 6px;white-space:nowrap;overflow:hidden;transition:opacity 0.2s}
+.sidebar.collapsed .nav-section-label{opacity:0}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 10px;border-radius:10px;cursor:pointer;color:var(--sidebar-text);transition:var(--transition);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-decoration:none;position:relative}
+.nav-item:hover{background:rgba(255,255,255,0.08);color:#fff}
+.nav-item.active{background:var(--primary);color:#fff;box-shadow:0 4px 12px rgba(47,111,237,0.4)}
+.nav-item i:first-child{width:20px;text-align:center;font-size:16px;flex-shrink:0}
+.nav-item-text{font-size:13px;font-weight:500;overflow:hidden;white-space:nowrap}
+.nav-badge{margin-left:auto;background:rgba(255,255,255,0.2);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;flex-shrink:0}
+.nav-item.active .nav-badge{background:rgba(255,255,255,0.3)}
+.sidebar-footer{padding:12px 10px;border-top:1px solid rgba(255,255,255,0.08)}
+.sidebar-user{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;overflow:hidden}
+.sidebar-user-avatar{width:36px;height:36px;background:linear-gradient(135deg,#2F6FED,#1890FF);border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;flex-shrink:0}
+.sidebar-user-info{overflow:hidden}
+.sidebar-user-name{font-size:12px;font-weight:600;color:#fff;white-space:nowrap}
+.sidebar-user-role{font-size:11px;color:rgba(255,255,255,0.4);white-space:nowrap}
+
+/* ── MAIN CONTENT ── */
+.main{margin-left:var(--sidebar-w);margin-top:var(--navbar-h);min-height:calc(100vh - var(--navbar-h));padding:24px;transition:margin-left 0.3s cubic-bezier(0.4,0,0.2,1)}
+.sidebar.collapsed ~ .main{margin-left:var(--sidebar-collapsed)}
+.page{display:none;animation:fadeIn 0.3s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── PAGE HEADER ── */
+.page-header{margin-bottom:24px}
+.page-title{font-size:22px;font-weight:700;color:var(--text-primary);letter-spacing:-0.5px}
+.page-subtitle{font-size:13px;color:var(--text-secondary);margin-top:4px}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);margin-bottom:8px}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb i{font-size:10px}
+
+/* ── CARDS ── */
+.card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);transition:var(--transition)}
+.card:hover{box-shadow:var(--shadow-md)}
+
+/* ── KPI CARDS ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.kpi-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;align-items:flex-start;gap:16px;box-shadow:var(--shadow);transition:var(--transition);cursor:pointer;position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;opacity:0.08;transition:var(--transition)}
+.kpi-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.kpi-card:hover::before{transform:scale(1.3)}
+.kpi-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+.kpi-card.total .kpi-icon{background:linear-gradient(135deg,#e8f0fd,#c5d8ff);color:#2F6FED}
+.kpi-card.total::before{background:#2F6FED}
+.kpi-card.rnr .kpi-icon{background:linear-gradient(135deg,#fff0f0,#ffc5c5);color:#FF4D4F}
+.kpi-card.rnr::before{background:#FF4D4F}
+.kpi-card.ni .kpi-icon{background:linear-gradient(135deg,#fff7e6,#ffd591);color:#FA8C16}
+.kpi-card.ni::before{background:#FA8C16}
+.kpi-card.so .kpi-icon{background:linear-gradient(135deg,#f5f5f5,#d9d9d9);color:#8C8C8C}
+.kpi-card.so::before{background:#8C8C8C}
+.kpi-card.ot .kpi-icon{background:linear-gradient(135deg,#e6f7ff,#91d5ff);color:#1890FF}
+.kpi-card.ot::before{background:#1890FF}
+.kpi-info{flex:1}
+.kpi-label{font-size:12px;color:var(--text-secondary);font-weight:500;margin-bottom:6px}
+.kpi-value{font-size:28px;font-weight:700;color:var(--text-primary);line-height:1;margin-bottom:8px}
+.kpi-trend{display:flex;align-items:center;gap:4px;font-size:12px;font-weight:500}
+.kpi-trend.up{color:#52C41A}
+.kpi-trend.down{color:#FF4D4F}
+
+/* ── CHARTS ── */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px}
+.chart-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.chart-card.wide{grid-column:span 2}
+.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.chart-title{font-size:14px;font-weight:600;color:var(--text-primary)}
+.chart-subtitle{font-size:11px;color:var(--text-secondary);margin-top:2px}
+.chart-actions{display:flex;gap:6px}
+.chart-btn{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:500;border:1px solid var(--border);background:transparent;cursor:pointer;color:var(--text-secondary);font-family:inherit;transition:var(--transition)}
+.chart-btn.active,.chart-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+.chart-wrap{position:relative;height:180px}
+.chart-wrap.tall{height:220px}
+
+/* ── RECENT ACTIVITY ── */
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.activity-list{display:flex;flex-direction:column;gap:10px;max-height:280px;overflow-y:auto}
+.activity-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:var(--secondary);transition:var(--transition)}
+.activity-item:hover{background:var(--primary-light)}
+.activity-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.activity-info{flex:1;min-width:0}
+.activity-name{font-size:13px;font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.activity-meta{font-size:11px;color:var(--text-secondary);margin-top:2px}
+.activity-badge{flex-shrink:0}
+
+/* ── BADGES / REMARKS ── */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.badge-rnr{background:#fff0f0;color:#FF4D4F;border:1px solid #ffccc7}
+.badge-ni{background:#fff7e6;color:#FA8C16;border:1px solid #ffd591}
+.badge-so{background:#f5f5f5;color:#8C8C8C;border:1px solid #d9d9d9}
+.badge-ot{background:#e6f7ff;color:#1890FF;border:1px solid #91d5ff}
+.badge-success{background:#f6ffed;color:#52C41A;border:1px solid #b7eb8f}
+.badge-primary{background:var(--primary-light);color:var(--primary);border:1px solid #c5d8ff}
+
+/* ── TABLE ── */
+.table-toolbar{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.table-search{flex:1;min-width:200px;position:relative}
+.table-search input{width:100%;padding:8px 12px 8px 36px;background:var(--secondary);border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;color:var(--text-primary);outline:none;transition:var(--transition)}
+.table-search input:focus{border-color:var(--primary);background:var(--card-bg)}
+.table-search i{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px}
+.filter-select{padding:8px 12px;background:var(--secondary);border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;color:var(--text-primary);outline:none;cursor:pointer;transition:var(--transition)}
+.filter-select:focus{border-color:var(--primary)}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:8px;font-family:inherit;font-size:13px;font-weight:500;border:none;cursor:pointer;transition:var(--transition)}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 2px 8px rgba(47,111,237,0.3)}
+.btn-primary:hover{background:var(--primary-dark);box-shadow:0 4px 12px rgba(47,111,237,0.4)}
+.btn-secondary{background:var(--secondary);color:var(--text-secondary);border:1px solid var(--border)}
+.btn-secondary:hover{background:var(--border);color:var(--text-primary)}
+.btn-danger{background:#fff0f0;color:#FF4D4F;border:1px solid #ffccc7}
+.btn-danger:hover{background:#FF4D4F;color:#fff}
+.btn-success{background:#f6ffed;color:#52C41A;border:1px solid #b7eb8f}
+.btn-success:hover{background:#52C41A;color:#fff}
+.btn-sm{padding:5px 10px;font-size:12px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead{position:sticky;top:0;z-index:10;background:var(--secondary)}
+th{padding:12px 16px;text-align:left;font-size:11px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;border-bottom:1px solid var(--border)}
+td{padding:12px 16px;font-size:13px;color:var(--text-primary);border-bottom:1px solid var(--border);vertical-align:middle}
+tbody tr{transition:background 0.15s}
+tbody tr:hover{background:var(--primary-light)}
+[data-theme="dark"] tbody tr:hover{background:var(--primary-light)}
+.td-name{font-weight:600;color:var(--text-primary)}
+.td-phone{display:flex;align-items:center;gap:6px;color:var(--primary);font-weight:500}
+.td-phone a{color:inherit;text-decoration:none}
+.td-phone .wa-btn{width:22px;height:22px;background:#25D366;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:11px;cursor:pointer;transition:var(--transition)}
+.td-phone .wa-btn:hover{transform:scale(1.1)}
+.td-actions{display:flex;align-items:center;gap:6px}
+.action-btn{width:30px;height:30px;border:none;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:13px;transition:var(--transition)}
+.action-btn:hover{transform:scale(1.1)}
+.action-edit{background:#e8f0fd;color:#2F6FED}
+.action-delete{background:#fff0f0;color:#FF4D4F}
+.action-edit:hover{background:#2F6FED;color:#fff}
+.action-delete:hover{background:#FF4D4F;color:#fff}
+.checkbox-cell input{width:16px;height:16px;accent-color:var(--primary);cursor:pointer}
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-top:1px solid var(--border)}
+.pagination-info{font-size:12px;color:var(--text-secondary)}
+.pagination-controls{display:flex;align-items:center;gap:4px}
+.page-btn{width:32px;height:32px;border:1px solid var(--border);background:var(--card-bg);border-radius:7px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:500;color:var(--text-secondary);transition:var(--transition);display:inline-flex;align-items:center;justify-content:center}
+.page-btn:hover,.page-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.active{display:flex;animation:modalIn 0.3s ease}
+@keyframes modalIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--card-bg);border-radius:16px;width:100%;max-width:600px;box-shadow:var(--shadow-lg);animation:modalSlide 0.3s ease}
+@keyframes modalSlide{from{transform:scale(0.95) translateY(10px)}to{transform:scale(1) translateY(0)}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border)}
+.modal-title{font-size:16px;font-weight:700;color:var(--text-primary)}
+.modal-close{width:32px;height:32px;border:none;background:var(--secondary);border-radius:8px;cursor:pointer;color:var(--text-secondary);font-size:16px;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+.modal-close:hover{background:#FF4D4F;color:#fff}
+.modal-body{padding:24px}
+.modal-footer{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:16px 24px;border-top:1px solid var(--border)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group-modal{display:flex;flex-direction:column;gap:6px}
+.form-group-modal.full{grid-column:span 2}
+.form-group-modal label{font-size:12px;font-weight:600;color:var(--text-secondary);letter-spacing:0.3px}
+.form-group-modal input,.form-group-modal select,.form-group-modal textarea{padding:9px 12px;background:var(--secondary);border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;color:var(--text-primary);outline:none;transition:var(--transition);resize:none}
+.form-group-modal input:focus,.form-group-modal select:focus,.form-group-modal textarea:focus{border-color:var(--primary);background:var(--card-bg);box-shadow:0 0 0 3px var(--primary-light)}
+.form-group-modal .error-msg{font-size:11px;color:#FF4D4F;display:none}
+.form-group-modal.error input,.form-group-modal.error select{border-color:#FF4D4F}
+.form-group-modal.error .error-msg{display:block}
+/* Phone input */
+.phone-input{display:flex;gap:6px}
+.phone-code{width:80px;flex-shrink:0;padding:9px 10px;background:var(--secondary);border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;color:var(--text-primary);outline:none;cursor:pointer}
+.phone-code:focus{border-color:var(--primary)}
+
+/* ── CONFIRM MODAL ── */
+.confirm-modal{max-width:400px}
+.confirm-icon{width:56px;height:56px;border-radius:16px;background:#fff0f0;color:#FF4D4F;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 16px}
+.confirm-modal .modal-body{text-align:center}
+.confirm-title{font-size:16px;font-weight:700;color:var(--text-primary);margin-bottom:8px}
+.confirm-text{font-size:13px;color:var(--text-secondary)}
+
+/* ── REPORTS ── */
+.reports-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.report-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.report-card.full{grid-column:span 2}
+.export-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.date-range{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.date-range input[type="date"]{padding:7px 10px;background:var(--secondary);border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:12px;color:var(--text-primary);outline:none}
+.date-range input[type="date"]:focus{border-color:var(--primary)}
+
+/* ── SETTINGS ── */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.settings-section{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.settings-section.full{grid-column:span 2}
+.settings-title{font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.settings-title i{color:var(--primary)}
+.staff-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.staff-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--secondary);border-radius:8px;border:1px solid var(--border)}
+.staff-meta{display:flex;align-items:center;gap:10px}
+.staff-avatar{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#2F6FED,#1890FF);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.staff-name{font-size:13px;font-weight:500;color:var(--text-primary)}
+.staff-role{font-size:11px;color:var(--text-secondary)}
+.remark-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.remark-chip{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;transition:var(--transition)}
+.remark-chip:hover{transform:scale(1.03)}
+.pw-form{display:flex;flex-direction:column;gap:12px}
+.pw-input-wrap{position:relative}
+.pw-input-wrap input{width:100%;padding:9px 40px 9px 12px;background:var(--secondary);border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;color:var(--text-primary);outline:none;transition:var(--transition)}
+.pw-input-wrap input:focus{border-color:var(--primary);background:var(--card-bg)}
+.pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);cursor:pointer;font-size:14px}
+
+/* ── TOAST ── */
+.toast-container{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:500;min-width:280px;max-width:360px;box-shadow:var(--shadow-lg);animation:toastIn 0.3s ease;background:var(--card-bg);border:1px solid var(--border);color:var(--text-primary)}
+.toast-success{border-left:3px solid #52C41A}
+.toast-error{border-left:3px solid #FF4D4F}
+.toast-info{border-left:3px solid #2F6FED}
+.toast i{font-size:16px}
+.toast-success i{color:#52C41A}
+.toast-error i{color:#FF4D4F}
+.toast-info i{color:#2F6FED}
+.toast-msg{flex:1}
+.toast-close{color:var(--text-muted);cursor:pointer;margin-left:auto;font-size:12px}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{to{opacity:0;transform:translateX(20px)}}
+
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:60px 20px;color:var(--text-secondary)}
+.empty-icon{font-size:48px;margin-bottom:16px;opacity:0.4}
+.empty-title{font-size:16px;font-weight:600;color:var(--text-secondary);margin-bottom:6px}
+.empty-text{font-size:13px;color:var(--text-muted)}
+
+/* ── SKELETON ── */
+.skeleton{background:linear-gradient(90deg,var(--secondary) 25%,var(--border) 50%,var(--secondary) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:6px}
+@keyframes shimmer{to{background-position:-200% 0}}
+
+/* ── STAT CHIP ── */
+.stat-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:var(--secondary);border-radius:6px;font-size:11px;color:var(--text-secondary)}
+
+/* ── WELCOME BANNER ── */
+.welcome-banner{background:linear-gradient(135deg,#1a3a6e 0%,#2F6FED 60%,#1890FF 100%);border-radius:var(--radius);padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;position:relative}
+.welcome-banner::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:rgba(255,255,255,0.06);border-radius:50%}
+.welcome-banner::after{content:'';position:absolute;right:60px;bottom:-60px;width:140px;height:140px;background:rgba(255,255,255,0.04);border-radius:50%}
+.welcome-text{position:relative;z-index:1}
+.welcome-text h2{font-size:20px;font-weight:700;color:#fff;margin-bottom:4px}
+.welcome-text p{font-size:13px;color:rgba(255,255,255,0.7)}
+.welcome-stats{display:flex;gap:24px;position:relative;z-index:1}
+.w-stat{text-align:center}
+.w-stat-val{font-size:24px;font-weight:700;color:#fff}
+.w-stat-lbl{font-size:11px;color:rgba(255,255,255,0.6);white-space:nowrap}
+
+/* ── MOBILE OVERLAY ── */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:140}
+
+/* ═══════════════════════ RESPONSIVE ═══════════════════════ */
+@media(max-width:1100px){
+  .charts-grid{grid-template-columns:1fr 1fr}
+  .chart-card.wide{grid-column:span 2}
+}
+@media(max-width:900px){
+  :root{--sidebar-w:240px}
+  .sidebar{transform:translateX(-100%);box-shadow:none}
+  .sidebar.mobile-open{transform:translateX(0);box-shadow:var(--shadow-lg)}
+  .sidebar-overlay.active{display:block}
+  .main{margin-left:0!important}
+  .navbar-left{width:auto;min-width:auto}
+  .charts-grid{grid-template-columns:1fr}
+  .chart-card.wide{grid-column:span 1}
+  .bottom-grid{grid-template-columns:1fr}
+  .reports-grid{grid-template-columns:1fr}
+  .settings-grid{grid-template-columns:1fr}
+  .settings-section.full{grid-column:span 1}
+  .form-grid{grid-template-columns:1fr}
+  .form-group-modal.full{grid-column:span 1}
+  .welcome-stats{display:none}
+}
+@media(max-width:600px){
+  .main{padding:14px}
+  .welcome-banner{padding:16px}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .table-toolbar{flex-direction:column;align-items:stretch}
+  .btn span{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ LOGIN PAGE ══════════ -->
+<div id="loginPage">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-icon"><i class="fas fa-briefcase"></i></div>
+      <h1>Maverick Ghouse</h1>
+      <p>Foreign Manpower Consultancy · CRM</p>
+    </div>
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="loginUser" placeholder="Enter your username" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="Enter your password">
+      <i class="fas fa-eye input-icon-right" id="pwToggle"></i>
+    </div>
+    <div class="form-row">
+      <label class="checkbox-label"><input type="checkbox"> Remember me</label>
+      <a href="#" class="forgot-link">Forgot Password?</a>
+    </div>
+    <button class="btn-login" onclick="doLogin()">
+      <span id="loginBtnText">Sign In</span>
+      <div class="btn-loader" id="loginLoader"></div>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════ TOAST CONTAINER ══════════ -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ══════════ APP ══════════ -->
+<div id="app">
+  <!-- Sidebar overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileSidebar()"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <button class="sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+      <a href="#" class="logo">
+        <div class="logo-mark"><i class="fas fa-briefcase"></i></div>
+        <span class="logo-text">Maverick<span>Ghouse</span></span>
+      </a>
+    </div>
+    <div class="navbar-search">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search leads, staff…" oninput="globalSearch(this.value)">
+    </div>
+    <div class="navbar-right">
+      <button class="nav-icon-btn theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">
+        <i class="fas fa-moon" id="themeIcon"></i>
+      </button>
+      <button class="nav-icon-btn" title="Notifications">
+        <i class="fas fa-bell"></i>
+        <span class="notif-badge"></span>
+      </button>
+      <div class="user-avatar" onclick="doLogout()" title="Logout">MG</div>
+    </div>
+  </nav>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Main</span>
+      <a class="nav-item active" onclick="showPage('dashboard',this)">
+        <i class="fas fa-th-large"></i><span class="nav-item-text">Dashboard</span>
+      </a>
+      <a class="nav-item" onclick="showPage('leads',this)">
+        <i class="fas fa-users"></i><span class="nav-item-text">Leads</span><span class="nav-badge" id="leadsBadge">24</span>
+      </a>
+      <a class="nav-item" onclick="showPage('addlead',this)">
+        <i class="fas fa-user-plus"></i><span class="nav-item-text">Add Lead</span>
+      </a>
+      <span class="nav-section-label">Analytics</span>
+      <a class="nav-item" onclick="showPage('reports',this)">
+        <i class="fas fa-chart-bar"></i><span class="nav-item-text">Reports</span>
+      </a>
+      <span class="nav-section-label">Admin</span>
+      <a class="nav-item" onclick="showPage('settings',this)">
+        <i class="fas fa-cog"></i><span class="nav-item-text">Settings</span>
+      </a>
+      <a class="nav-item" onclick="doLogout()">
+        <i class="fas fa-sign-out-alt"></i><span class="nav-item-text">Logout</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-user-avatar">MG</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Maverick Ghouse</div>
+          <div class="sidebar-user-role">Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="main">
+
+    <!-- ─── DASHBOARD ─── -->
+    <div class="page active" id="page-dashboard">
+      <div class="welcome-banner">
+        <div class="welcome-text">
+          <h2>Welcome back, Maverick Ghouse Team 👋</h2>
+          <p>Here's what's happening with your leads today</p>
+        </div>
+        <div class="welcome-stats">
+          <div class="w-stat"><div class="w-stat-val">24</div><div class="w-stat-lbl">Total Leads</div></div>
+          <div class="w-stat"><div class="w-stat-val">6</div><div class="w-stat-lbl">This Week</div></div>
+          <div class="w-stat"><div class="w-stat-val">87%</div><div class="w-stat-lbl">Follow-up Rate</div></div>
+        </div>
+      </div>
+
+      <!-- KPI -->
+      <div class="kpi-grid">
+        <div class="kpi-card total">
+          <div class="kpi-icon"><i class="fas fa-users"></i></div>
+          <div class="kpi-info">
+            <div class="kpi-label">Total Leads</div>
+            <div class="kpi-value" id="kpi-total">24</div>
+            <div class="kpi-trend up"><i class="fas fa-arrow-up"></i>+12% this month</div>
+          </div>
+        </div>
+        <div class="kpi-card rnr">
+          <div class="kpi-icon"><i class="fas fa-phone-slash"></i></div>
+          <div class="kpi-info">
+            <div class="kpi-label">RNR (Ring No Response)</div>
+            <div class="kpi-value" id="kpi-rnr">8</div>
+            <div class="kpi-trend down"><i class="fas fa-arrow-up"></i>+3 today</div>
+          </div>
+        </div>
+        <div class="kpi-card ni">
+          <div class="kpi-icon"><i class="fas fa-ban"></i></div>
+          <div class="kpi-info">
+            <div class="kpi-label">Not Interested</div>
+            <div class="kpi-value" id="kpi-ni">5</div>
+            <div class="kpi-trend up"><i class="fas fa-arrow-down"></i>-2 this week</div>
+          </div>
+        </div>
+        <div class="kpi-card so">
+          <div class="kpi-icon"><i class="fas fa-power-off"></i></div>
+          <div class="kpi-info">
+            <div class="kpi-label">Switch Off</div>
+            <div class="kpi-value" id="kpi-so">4</div>
+            <div class="kpi-trend up"><i class="fas fa-arrow-down"></i>-1 this week</div>
+          </div>
+        </div>
+        <div class="kpi-card ot">
+          <div class="kpi-icon"><i class="fas fa-ellipsis-h"></i></div>
+          <div class="kpi-info">
+            <div class="kpi-label">Others</div>
+            <div class="kpi-value" id="kpi-ot">7</div>
+            <div class="kpi-trend up"><i class="fas fa-arrow-up"></i>+2 this week</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-header">
+            <div><div class="chart-title">Lead Status Breakdown</div><div class="chart-subtitle">Distribution overview</div></div>
+          </div>
+          <div class="chart-wrap"><canvas id="donutChart"></canvas></div>
+        </div>
+        <div class="chart-card wide">
+          <div class="chart-header">
+            <div><div class="chart-title">Leads by Staff</div><div class="chart-subtitle">Performance comparison</div></div>
+            <div class="chart-actions">
+              <button class="chart-btn active">Week</button>
+              <button class="chart-btn">Month</button>
+            </div>
+          </div>
+          <div class="chart-wrap tall"><canvas id="barChart"></canvas></div>
+        </div>
+        <div class="chart-card" style="grid-column:span 3">
+          <div class="chart-header">
+            <div><div class="chart-title">Daily Leads Trend</div><div class="chart-subtitle">Last 14 days</div></div>
+            <div class="chart-actions">
+              <button class="chart-btn active">Daily</button>
+              <button class="chart-btn">Weekly</button>
+            </div>
+          </div>
+          <div class="chart-wrap tall"><canvas id="lineChart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="bottom-grid">
+        <div class="card">
+          <div class="chart-header" style="margin-bottom:12px">
+            <div class="chart-title">Recent Leads Added</div>
+            <button class="btn btn-sm btn-secondary" onclick="showPage('leads',document.querySelector('.nav-item:nth-child(2)'))">View All</button>
+          </div>
+          <div class="activity-list" id="recentLeads"></div>
+        </div>
+        <div class="card">
+          <div class="chart-header" style="margin-bottom:12px">
+            <div class="chart-title">Status Updates</div>
+            <span class="stat-chip"><i class="fas fa-clock" style="font-size:10px"></i> Live</span>
+          </div>
+          <div class="activity-list" id="statusUpdates"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── LEADS ─── -->
+    <div class="page" id="page-leads">
+      <div class="page-header">
+        <div class="breadcrumb"><a href="#">Home</a><i class="fas fa-chevron-right"></i>Leads</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+          <div><div class="page-title">Leads Management</div><div class="page-subtitle">Manage and track all your leads</div></div>
+          <button class="btn btn-primary" onclick="openAddModal()"><i class="fas fa-plus"></i><span>Add Lead</span></button>
+        </div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div class="table-toolbar">
+          <div class="table-search"><i class="fas fa-search"></i><input type="text" placeholder="Search by name or phone…" id="leadSearch" oninput="filterLeads()"></div>
+          <select class="filter-select" id="remarkFilter" onchange="filterLeads()">
+            <option value="">All Remarks</option>
+            <option value="RNR">RNR</option>
+            <option value="Not Interested">Not Interested</option>
+            <option value="Switch Off">Switch Off</option>
+            <option value="Others">Others</option>
+          </select>
+          <select class="filter-select" id="staffFilter" onchange="filterLeads()">
+            <option value="">All Staff</option>
+            <option>Logeshwari HR</option><option>Divya HR</option><option>Harish</option><option>Arul VB</option>
+          </select>
+          <input type="date" class="filter-select" id="dateFilter" onchange="filterLeads()">
+          <button class="btn btn-success" onclick="exportExcel()"><i class="fas fa-file-excel"></i><span>Export</span></button>
+          <button class="btn btn-danger" id="bulkDeleteBtn" style="display:none" onclick="bulkDelete()"><i class="fas fa-trash"></i><span>Delete</span></button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)"></th>
+                <th>#</th><th>Name</th><th>Phone</th><th>Address</th>
+                <th>Remarks</th><th>Staff</th><th>Notes</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="leadsTableBody"></tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span class="pagination-info" id="paginationInfo">Showing 1–10 of 24</span>
+          <div class="pagination-controls" id="paginationControls"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── ADD LEAD ─── -->
+    <div class="page" id="page-addlead">
+      <div class="page-header">
+        <div class="breadcrumb"><a href="#">Home</a><i class="fas fa-chevron-right"></i>Add Lead</div>
+        <div class="page-title">Add New Lead</div>
+        <div class="page-subtitle">Fill in the details to add a new lead</div>
+      </div>
+      <div class="card">
+        <div class="form-grid" style="margin-bottom:16px">
+          <div class="form-group-modal" id="fg-name">
+            <label>Full Name *</label>
+            <input type="text" id="al-name" placeholder="e.g. Mohammed Irfan">
+            <span class="error-msg">Name is required</span>
+          </div>
+          <div class="form-group-modal" id="fg-phone">
+            <label>Phone Number *</label>
+            <div class="phone-input">
+              <select class="phone-code" id="al-code"><option>+91</option><option>+971</option><option>+65</option><option>+60</option><option>+966</option></select>
+              <input type="tel" id="al-phone" placeholder="9876543210" style="flex:1">
+            </div>
+            <span class="error-msg">Valid phone required</span>
+          </div>
+          <div class="form-group-modal full" id="fg-addr">
+            <label>Address</label>
+            <textarea id="al-addr" rows="2" placeholder="City, State, Country"></textarea>
+            <span class="error-msg"></span>
+          </div>
+          <div class="form-group-modal" id="fg-remark">
+            <label>Remarks *</label>
+            <select id="al-remark">
+              <option value="">Select remark</option>
+              <option value="RNR">RNR</option>
+              <option value="Not Interested">Not Interested</option>
+              <option value="Switch Off">Switch Off</option>
+              <option value="Others">Others</option>
+            </select>
+            <span class="error-msg">Remark is required</span>
+          </div>
+          <div class="form-group-modal" id="fg-staff">
+            <label>Staff Name *</label>
+            <select id="al-staff">
+              <option value="">Select staff</option>
+              <option>Logeshwari HR</option><option>Divya HR</option><option>Harish</option><option>Arul VB</option>
+            </select>
+            <span class="error-msg">Staff is required</span>
+          </div>
+          <div class="form-group-modal full">
+            <label>Notes</label>
+            <textarea id="al-notes" rows="3" placeholder="Additional notes or follow-up details…"></textarea>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-primary" onclick="saveNewLead()"><i class="fas fa-save"></i> Save Lead</button>
+          <button class="btn btn-secondary" onclick="clearForm()"><i class="fas fa-times"></i> Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── REPORTS ─── -->
+    <div class="page" id="page-reports">
+      <div class="page-header">
+        <div class="breadcrumb"><a href="#">Home</a><i class="fas fa-chevron-right"></i>Reports</div>
+        <div class="page-title">Reports & Analytics</div>
+        <div class="page-subtitle">Insights across all lead activity</div>
+      </div>
+      <div class="export-bar">
+        <div class="date-range">
+          <span style="font-size:13px;font-weight:500;color:var(--text-secondary)">Date range:</span>
+          <input type="date" value="2025-01-01">
+          <span style="font-size:13px;color:var(--text-muted)">to</span>
+          <input type="date" value="2025-01-31">
+          <select class="filter-select"><option>All Staff</option><option>Logeshwari HR</option><option>Divya HR</option></select>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-success" onclick="exportExcel()"><i class="fas fa-file-excel"></i> Export Excel</button>
+          <button class="btn btn-danger" onclick="showToast('PDF exported!','success')"><i class="fas fa-file-pdf"></i> Export PDF</button>
+        </div>
+      </div>
+      <div class="reports-grid">
+        <div class="report-card">
+          <div class="chart-header"><div class="chart-title">Lead Status Distribution</div></div>
+          <div class="chart-wrap tall"><canvas id="reportPie"></canvas></div>
+        </div>
+        <div class="report-card">
+          <div class="chart-header"><div class="chart-title">Leads by Staff</div></div>
+          <div class="chart-wrap tall"><canvas id="reportBar"></canvas></div>
+        </div>
+        <div class="report-card full">
+          <div class="chart-header"><div class="chart-title">Monthly Performance Trend</div></div>
+          <div class="chart-wrap" style="height:200px"><canvas id="reportLine"></canvas></div>
+        </div>
+      </div>
+      <!-- Summary table -->
+      <div class="card" style="padding:0;overflow:hidden">
+        <div class="table-toolbar"><span style="font-weight:600;font-size:14px">Staff Summary</span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Staff Name</th><th>Total Leads</th><th>RNR</th><th>Not Interested</th><th>Switch Off</th><th>Others</th><th>Success Rate</th></tr></thead>
+            <tbody>
+              <tr><td class="td-name">Logeshwari HR</td><td>8</td><td><span class="badge badge-rnr">3</span></td><td><span class="badge badge-ni">2</span></td><td><span class="badge badge-so">1</span></td><td><span class="badge badge-ot">2</span></td><td><span class="badge badge-success">75%</span></td></tr>
+              <tr><td class="td-name">Divya HR</td><td>7</td><td><span class="badge badge-rnr">2</span></td><td><span class="badge badge-ni">1</span></td><td><span class="badge badge-so">2</span></td><td><span class="badge badge-ot">2</span></td><td><span class="badge badge-success">71%</span></td></tr>
+              <tr><td class="td-name">Harish</td><td>5</td><td><span class="badge badge-rnr">2</span></td><td><span class="badge badge-ni">1</span></td><td><span class="badge badge-so">1</span></td><td><span class="badge badge-ot">1</span></td><td><span class="badge badge-success">60%</span></td></tr>
+              <tr><td class="td-name">Arul VB</td><td>4</td><td><span class="badge badge-rnr">1</span></td><td><span class="badge badge-ni">1</span></td><td><span class="badge badge-so">0</span></td><td><span class="badge badge-ot">2</span></td><td><span class="badge badge-success">75%</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SETTINGS ─── -->
+    <div class="page" id="page-settings">
+      <div class="page-header">
+        <div class="breadcrumb"><a href="#">Home</a><i class="fas fa-chevron-right"></i>Settings</div>
+        <div class="page-title">Settings</div>
+        <div class="page-subtitle">Manage staff, remarks, and preferences</div>
+      </div>
+      <div class="settings-grid">
+        <!-- Manage Staff -->
+        <div class="settings-section">
+          <div class="settings-title"><i class="fas fa-users"></i> Manage Staff</div>
+          <div class="staff-list">
+            <div class="staff-item"><div class="staff-meta"><div class="staff-avatar">AH</div><div><div class="staff-name">Logeshwari HR</div><div class="staff-role">Senior Consultant</div></div></div><div style="display:flex;gap:6px"><button class="action-btn action-edit"><i class="fas fa-pen"></i></button><button class="action-btn action-delete"><i class="fas fa-trash"></i></button></div></div>
+            <div class="staff-item"><div class="staff-meta"><div class="staff-avatar" style="background:linear-gradient(135deg,#FA8C16,#FF4D4F)">FA</div><div><div class="staff-name">Divya HR</div><div class="staff-role">Consultant</div></div></div><div style="display:flex;gap:6px"><button class="action-btn action-edit"><i class="fas fa-pen"></i></button><button class="action-btn action-delete"><i class="fas fa-trash"></i></button></div></div>
+            <div class="staff-item"><div class="staff-meta"><div class="staff-avatar" style="background:linear-gradient(135deg,#52C41A,#1890FF)">RV</div><div><div class="staff-name">Harish</div><div class="staff-role">Junior Consultant</div></div></div><div style="display:flex;gap:6px"><button class="action-btn action-edit"><i class="fas fa-pen"></i></button><button class="action-btn action-delete"><i class="fas fa-trash"></i></button></div></div>
+            <div class="staff-item"><div class="staff-meta"><div class="staff-avatar" style="background:linear-gradient(135deg,#722ED1,#1890FF)">ME</div><div><div class="staff-name">Arul VB</div><div class="staff-role">Coordinator</div></div></div><div style="display:flex;gap:6px"><button class="action-btn action-edit"><i class="fas fa-pen"></i></button><button class="action-btn action-delete"><i class="fas fa-trash"></i></button></div></div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="showToast('Staff member added','success')"><i class="fas fa-plus"></i> Add Staff</button>
+        </div>
+
+        <!-- Manage Remarks -->
+        <div class="settings-section">
+          <div class="settings-title"><i class="fas fa-tags"></i> Manage Remark Types</div>
+          <div class="remark-chips">
+            <div class="remark-chip badge-rnr"><i class="fas fa-circle" style="font-size:8px"></i> RNR</div>
+            <div class="remark-chip badge-ni"><i class="fas fa-circle" style="font-size:8px"></i> Not Interested</div>
+            <div class="remark-chip badge-so"><i class="fas fa-circle" style="font-size:8px"></i> Switch Off</div>
+            <div class="remark-chip badge-ot"><i class="fas fa-circle" style="font-size:8px"></i> Others</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="showToast('Remark type added','success')"><i class="fas fa-plus"></i> Add Remark Type</button>
+
+          <div class="settings-title" style="margin-top:20px"><i class="fas fa-user-circle"></i> Profile Settings</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="form-group-modal"><label>Full Name</label><input type="text" value="Maverick Ghouse"></div>
+            <div class="form-group-modal"><label>Email</label><input type="email" value="admin@maverickghouse.com"></div>
+            <button class="btn btn-primary btn-sm" onclick="showToast('Profile updated!','success')"><i class="fas fa-save"></i> Save Profile</button>
+          </div>
+        </div>
+
+        <!-- Change Password -->
+        <div class="settings-section full">
+          <div class="settings-title"><i class="fas fa-lock"></i> Change Password</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+            <div class="form-group-modal"><label>Current Password</label><div class="pw-input-wrap"><input type="password" placeholder="Enter current password"><i class="fas fa-eye pw-toggle"></i></div></div>
+            <div class="form-group-modal"><label>New Password</label><div class="pw-input-wrap"><input type="password" placeholder="Enter new password"><i class="fas fa-eye pw-toggle"></i></div></div>
+            <div class="form-group-modal"><label>Confirm Password</label><div class="pw-input-wrap"><input type="password" placeholder="Confirm new password"><i class="fas fa-eye pw-toggle"></i></div></div>
+          </div>
+          <button class="btn btn-primary" style="margin-top:12px" onclick="showToast('Password changed successfully!','success')"><i class="fas fa-lock"></i> Update Password</button>
+        </div>
+      </div>
+    </div>
+
+  </main><!-- /main -->
+</div><!-- /app -->
+
+<!-- ══════════ MODALS ══════════ -->
+<!-- Add/Edit Lead Modal -->
+<div class="modal-overlay" id="leadModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Add New Lead</div>
+      <button class="modal-close" onclick="closeModal('leadModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group-modal" id="mfg-name">
+          <label>Full Name *</label>
+          <input type="text" id="m-name" placeholder="e.g. Mohammed Irfan">
+          <span class="error-msg">Name is required</span>
+        </div>
+        <div class="form-group-modal" id="mfg-phone">
+          <label>Phone Number *</label>
+          <div class="phone-input">
+            <select class="phone-code" id="m-code"><option>+91</option><option>+971</option><option>+65</option><option>+60</option><option>+966</option></select>
+            <input type="tel" id="m-phone" placeholder="9876543210" style="flex:1;padding:9px 12px;background:var(--secondary);border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;color:var(--text-primary);outline:none;transition:var(--transition)">
+          </div>
+          <span class="error-msg">Valid phone required</span>
+        </div>
+        <div class="form-group-modal full" id="mfg-addr">
+          <label>Address</label>
+          <textarea id="m-addr" rows="2" placeholder="City, State, Country"></textarea>
+        </div>
+        <div class="form-group-modal" id="mfg-remark">
+          <label>Remarks *</label>
+          <select id="m-remark">
+            <option value="">Select remark</option>
+            <option>RNR</option><option>Not Interested</option><option>Switch Off</option><option>Others</option>
+          </select>
+          <span class="error-msg">Remark is required</span>
+        </div>
+        <div class="form-group-modal" id="mfg-staff">
+          <label>Staff Name *</label>
+          <select id="m-staff">
+            <option value="">Select staff</option>
+            <option>Logeshwari HR</option><option>Divya HR</option><option>Harish</option><option>Arul VB</option>
+          </select>
+          <span class="error-msg">Staff is required</span>
+        </div>
+        <div class="form-group-modal full">
+          <label>Notes</label>
+          <textarea id="m-notes" rows="2" placeholder="Additional notes…"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('leadModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveLead()"><i class="fas fa-save"></i> Save Lead</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirm -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal confirm-modal">
+    <div class="modal-body">
+      <div class="confirm-icon"><i class="fas fa-trash-alt"></i></div>
+      <div class="confirm-title">Delete Lead?</div>
+      <div class="confirm-text">This action cannot be undone. The lead will be permanently removed.</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('confirmModal')">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDelete()"><i class="fas fa-trash"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SCRIPT ══════════ -->
+<script>
+/* ─── DATA ─── */
+let leads = [
+  {id:1,name:'Mohammed Irfan',phone:'+91 9876543210',address:'Chennai, Tamil Nadu',remark:'RNR',staff:'Logeshwari HR',notes:'Called twice, no response',date:'2025-01-15'},
+  {id:2,name:'Sanjay Kumar',phone:'+91 8765432109',address:'Coimbatore, TN',remark:'Not Interested',staff:'Divya HR',notes:'Looking for local jobs only',date:'2025-01-14'},
+  {id:3,name:'Ramesh Babu',phone:'+91 7654321098',address:'Madurai, TN',remark:'Others',staff:'Harish',notes:'Will call back next week',date:'2025-01-14'},
+  {id:4,name:'Priya Devi',phone:'+91 6543210987',address:'Salem, TN',remark:'Switch Off',staff:'Arul VB',notes:'Phone switched off for 2 days',date:'2025-01-13'},
+  {id:5,name:'Arjun Raj',phone:'+91 5432109876',address:'Tiruchy, TN',remark:'RNR',staff:'Logeshwari HR',notes:'Try evening slot',date:'2025-01-13'},
+  {id:6,name:'Deepika S',phone:'+91 9123456780',address:'Vellore, TN',remark:'Others',staff:'Divya HR',notes:'Interested in Malaysia jobs',date:'2025-01-12'},
+  {id:7,name:'Murugan K',phone:'+91 8234567891',address:'Erode, TN',remark:'RNR',staff:'Harish',notes:'',date:'2025-01-12'},
+  {id:8,name:'Lakshmi N',phone:'+91 7345678902',address:'Tirunelveli, TN',remark:'Not Interested',staff:'Arul VB',notes:'Already placed elsewhere',date:'2025-01-11'},
+  {id:9,name:'Vijay T',phone:'+91 6456789013',address:'Kancheepuram, TN',remark:'Others',staff:'Logeshwari HR',notes:'Follow up after visa',date:'2025-01-11'},
+  {id:10,name:'Geetha R',phone:'+91 5567890124',address:'Nagercoil, TN',remark:'Switch Off',staff:'Divya HR',notes:'',date:'2025-01-10'},
+  {id:11,name:'Karthik M',phone:'+91 9988776655',address:'Thanjavur, TN',remark:'RNR',staff:'Harish',notes:'Try in morning',date:'2025-01-10'},
+  {id:12,name:'Anitha P',phone:'+91 8877665544',address:'Kumbakonam, TN',remark:'Others',staff:'Arul VB',notes:'Interested in Singapore',date:'2025-01-09'},
+];
+let nextId = 13;
+let currentPage = 1;
+const perPage = 8;
+let editId = null;
+let deleteId = null;
+let filteredLeads = [...leads];
+
+/* ─── LOGIN ─── */
+document.getElementById('pwToggle').addEventListener('click', function(){
+  const inp = document.getElementById('loginPass');
+  if(inp.type==='password'){inp.type='text';this.className='fas fa-eye-slash input-icon-right';}
+  else{inp.type='password';this.className='fas fa-eye input-icon-right';}
+});
+
+function doLogin(){
+  const u=document.getElementById('loginUser').value;
+  const p=document.getElementById('loginPass').value;
+  if(!u||!p){showToast('Please enter credentials','error');return;}
+  document.getElementById('loginBtnText').style.display='none';
+  document.getElementById('loginLoader').style.display='block';
+  setTimeout(()=>{
+    document.getElementById('loginPage').style.opacity='0';
+    setTimeout(()=>{
+      document.getElementById('loginPage').style.display='none';
+      document.getElementById('app').classList.add('visible');
+      initCharts();
+      renderLeads();
+      renderRecent();
+      showToast('Welcome back, Maverick Ghouse! 👋','success');
+    },500);
+  },1200);
+}
+
+function doLogout(){
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('app').style.display='none';
+  const lp=document.getElementById('loginPage');
+  lp.style.display='flex';
+  setTimeout(()=>{lp.style.opacity='1';},10);
+  document.getElementById('loginBtnText').style.display='block';
+  document.getElementById('loginLoader').style.display='none';
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('loginPage').style.display!=='none')doLogin();});
+
+/* ─── SIDEBAR ─── */
+let sidebarCollapsed = false;
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');
+  const ov=document.getElementById('sidebarOverlay');
+  if(window.innerWidth<=900){
+    sb.classList.toggle('mobile-open');
+    ov.classList.toggle('active');
+  } else {
+    sidebarCollapsed=!sidebarCollapsed;
+    sb.classList.toggle('collapsed',sidebarCollapsed);
+  }
+}
+function toggleMobileSidebar(){
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sidebarOverlay').classList.remove('active');
+}
+
+/* ─── PAGES ─── */
+function showPage(name,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(el)el.classList.add('active');
+  if(name==='leads')renderLeads();
+  if(name==='reports')setTimeout(initReportCharts,100);
+  if(window.innerWidth<=900)toggleMobileSidebar();
+}
+
+/* ─── THEME ─── */
+let darkMode=false;
+function toggleTheme(){
+  darkMode=!darkMode;
+  document.documentElement.setAttribute('data-theme',darkMode?'dark':'');
+  document.getElementById('themeIcon').className=darkMode?'fas fa-sun':'fas fa-moon';
+}
+
+/* ─── TOAST ─── */
+function showToast(msg,type='info'){
+  const icons={success:'fa-check-circle',error:'fa-times-circle',info:'fa-info-circle'};
+  const t=document.createElement('div');
+  t.className=`toast toast-${type}`;
+  t.innerHTML=`<i class="fas ${icons[type]}"></i><span class="toast-msg">${msg}</span><i class="fas fa-times toast-close" onclick="this.parentElement.remove()"></i>`;
+  document.getElementById('toastContainer').appendChild(t);
+  setTimeout(()=>{t.style.animation='toastOut 0.3s ease forwards';setTimeout(()=>t.remove(),300);},3500);
+}
+
+/* ─── LEADS TABLE ─── */
+function remarkBadge(r){
+  const m={'RNR':'badge-rnr','Not Interested':'badge-ni','Switch Off':'badge-so','Others':'badge-ot'};
+  return `<span class="badge ${m[r]||'badge-primary'}">${r}</span>`;
+}
+
+function renderLeads(){
+  filterLeads();
+}
+
+function filterLeads(){
+  const s=(document.getElementById('leadSearch')||{value:''}).value.toLowerCase();
+  const r=(document.getElementById('remarkFilter')||{value:''}).value;
+  const st=(document.getElementById('staffFilter')||{value:''}).value;
+  filteredLeads=leads.filter(l=>{
+    const ms=!s||(l.name.toLowerCase().includes(s)||l.phone.includes(s));
+    const mr=!r||l.remark===r;
+    const mst=!st||l.staff===st;
+    return ms&&mr&&mst;
+  });
+  currentPage=1;
+  renderTable();
+}
+
+function renderTable(){
+  const tbody=document.getElementById('leadsTableBody');
+  if(!tbody)return;
+  const start=(currentPage-1)*perPage;
+  const slice=filteredLeads.slice(start,start+perPage);
+  if(slice.length===0){tbody.innerHTML=`<tr><td colspan="9"><div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-title">No leads found</div><div class="empty-text">Try adjusting your search or filters</div></div></td></tr>`;renderPagination();return;}
+  tbody.innerHTML=slice.map((l,i)=>`
+    <tr>
+      <td class="checkbox-cell"><input type="checkbox" class="row-check" onchange="updateBulk()"></td>
+      <td style="color:var(--text-muted);font-size:12px">${start+i+1}</td>
+      <td class="td-name">${l.name}</td>
+      <td><div class="td-phone"><a href="tel:${l.phone}">${l.phone}</a><a href="https://wa.me/${l.phone.replace(/\D/g,'')}" target="_blank" class="wa-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></a></div></td>
+      <td style="color:var(--text-secondary);font-size:12px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.address}</td>
+      <td>${remarkBadge(l.remark)}</td>
+      <td><span class="badge badge-primary">${l.staff}</span></td>
+      <td style="color:var(--text-secondary);font-size:12px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.notes||'—'}</td>
+      <td class="td-actions">
+        <button class="action-btn action-edit" onclick="openEditModal(${l.id})" title="Edit"><i class="fas fa-pen"></i></button>
+        <button class="action-btn action-delete" onclick="openConfirm(${l.id})" title="Delete"><i class="fas fa-trash"></i></button>
+      </td>
+    </tr>`).join('');
+  renderPagination();
+  document.getElementById('leadsBadge').textContent=leads.length;
+  updateKPIs();
+}
+
+function renderPagination(){
+  const total=filteredLeads.length;
+  const pages=Math.ceil(total/perPage);
+  const start=(currentPage-1)*perPage+1;
+  const end=Math.min(currentPage*perPage,total);
+  const info=document.getElementById('paginationInfo');
+  const ctrl=document.getElementById('paginationControls');
+  if(info)info.textContent=total?`Showing ${start}–${end} of ${total}`:'No results';
+  if(!ctrl)return;
+  let html=`<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`;
+  for(let i=1;i<=pages;i++)html+=`<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+  html+=`<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===pages?'disabled':''}>›</button>`;
+  ctrl.innerHTML=html;
+}
+function goPage(n){const pages=Math.ceil(filteredLeads.length/perPage);if(n<1||n>pages)return;currentPage=n;renderTable();}
+
+function toggleSelectAll(cb){
+  document.querySelectorAll('.row-check').forEach(c=>c.checked=cb.checked);
+  updateBulk();
+}
+function updateBulk(){
+  const checked=document.querySelectorAll('.row-check:checked').length;
+  const btn=document.getElementById('bulkDeleteBtn');
+  if(btn)btn.style.display=checked?'inline-flex':'none';
+}
+function bulkDelete(){
+  const checks=[...document.querySelectorAll('.row-check:checked')];
+  if(!checks.length)return;
+  const rows=checks.map(c=>c.closest('tr'));
+  const si=rows.map(r=>parseInt(r.cells[1].textContent)-1);
+  const start=(currentPage-1)*perPage;
+  const ids=si.map(i=>filteredLeads[start+i]?.id).filter(Boolean);
+  leads=leads.filter(l=>!ids.includes(l.id));
+  filterLeads();
+  showToast(`${ids.length} lead(s) deleted`,'success');
+}
+
+/* ─── MODAL ─── */
+let editingId=null;
+function openAddModal(){
+  editingId=null;
+  document.getElementById('modalTitle').textContent='Add New Lead';
+  ['m-name','m-phone','m-addr','m-notes'].forEach(id=>document.getElementById(id).value='');
+  ['m-remark','m-staff','m-code'].forEach(id=>document.getElementById(id).selectedIndex=0);
+  ['mfg-name','mfg-phone','mfg-remark','mfg-staff'].forEach(id=>document.getElementById(id).classList.remove('error'));
+  document.getElementById('leadModal').classList.add('active');
+}
+function openEditModal(id){
+  const l=leads.find(x=>x.id===id);
+  if(!l)return;
+  editingId=id;
+  document.getElementById('modalTitle').textContent='Edit Lead';
+  document.getElementById('m-name').value=l.name;
+  document.getElementById('m-phone').value=l.phone.replace(/\+\d+\s/,'');
+  document.getElementById('m-addr').value=l.address;
+  document.getElementById('m-notes').value=l.notes;
+  document.getElementById('m-remark').value=l.remark;
+  document.getElementById('m-staff').value=l.staff;
+  document.getElementById('leadModal').classList.add('active');
+}
+function closeModal(id){document.getElementById(id).classList.remove('active');}
+function openConfirm(id){deleteId=id;document.getElementById('confirmModal').classList.add('active');}
+function confirmDelete(){
+  leads=leads.filter(l=>l.id!==deleteId);
+  closeModal('confirmModal');
+  filterLeads();
+  showToast('Lead deleted successfully','success');
+  updateKPIs();
+}
+function saveLead(){
+  const n=document.getElementById('m-name').value.trim();
+  const p=document.getElementById('m-phone').value.trim();
+  const r=document.getElementById('m-remark').value;
+  const s=document.getElementById('m-staff').value;
+  let valid=true;
+  if(!n){document.getElementById('mfg-name').classList.add('error');valid=false;}else document.getElementById('mfg-name').classList.remove('error');
+  if(!p||p.length<7){document.getElementById('mfg-phone').classList.add('error');valid=false;}else document.getElementById('mfg-phone').classList.remove('error');
+  if(!r){document.getElementById('mfg-remark').classList.add('error');valid=false;}else document.getElementById('mfg-remark').classList.remove('error');
+  if(!s){document.getElementById('mfg-staff').classList.add('error');valid=false;}else document.getElementById('mfg-staff').classList.remove('error');
+  if(!valid)return;
+  const code=document.getElementById('m-code').value;
+  const lead={id:editingId||nextId++,name:n,phone:`${code} ${p}`,address:document.getElementById('m-addr').value,remark:r,staff:s,notes:document.getElementById('m-notes').value,date:new Date().toISOString().split('T')[0]};
+  if(editingId){const idx=leads.findIndex(l=>l.id===editingId);leads[idx]=lead;showToast('Lead updated!','success');}
+  else{leads.unshift(lead);showToast('Lead added successfully!','success');}
+  closeModal('leadModal');filterLeads();updateKPIs();renderRecent();
+}
+
+/* ─── ADD LEAD PAGE ─── */
+function saveNewLead(){
+  const n=document.getElementById('al-name').value.trim();
+  const p=document.getElementById('al-phone').value.trim();
+  const r=document.getElementById('al-remark').value;
+  const s=document.getElementById('al-staff').value;
+  let valid=true;
+  if(!n){document.getElementById('fg-name').classList.add('error');valid=false;}else document.getElementById('fg-name').classList.remove('error');
+  if(!p||p.length<7){document.getElementById('fg-phone').classList.add('error');valid=false;}else document.getElementById('fg-phone').classList.remove('error');
+  if(!r){document.getElementById('fg-remark').classList.add('error');valid=false;}else document.getElementById('fg-remark').classList.remove('error');
+  if(!s){document.getElementById('fg-staff').classList.add('error');valid=false;}else document.getElementById('fg-staff').classList.remove('error');
+  if(!valid)return;
+  const code=document.getElementById('al-code').value;
+  const lead={id:nextId++,name:n,phone:`${code} ${p}`,address:document.getElementById('al-addr').value,remark:r,staff:s,notes:document.getElementById('al-notes').value,date:new Date().toISOString().split('T')[0]};
+  leads.unshift(lead);
+  showToast('Lead saved successfully! ✅','success');
+  clearForm();updateKPIs();renderRecent();
+}
+function clearForm(){
+  ['al-name','al-phone','al-addr','al-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['al-remark','al-staff'].forEach(id=>{const el=document.getElementById(id);if(el)el.selectedIndex=0;});
+  ['fg-name','fg-phone','fg-remark','fg-staff'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('error');});
+}
+
+/* ─── KPIs ─── */
+function updateKPIs(){
+  const total=leads.length;
+  const rnr=leads.filter(l=>l.remark==='RNR').length;
+  const ni=leads.filter(l=>l.remark==='Not Interested').length;
+  const so=leads.filter(l=>l.remark==='Switch Off').length;
+  const ot=leads.filter(l=>l.remark==='Others').length;
+  document.getElementById('kpi-total').textContent=total;
+  document.getElementById('kpi-rnr').textContent=rnr;
+  document.getElementById('kpi-ni').textContent=ni;
+  document.getElementById('kpi-so').textContent=so;
+  document.getElementById('kpi-ot').textContent=ot;
+}
+
+/* ─── RECENT ─── */
+function renderRecent(){
+  const rl=document.getElementById('recentLeads');
+  const su=document.getElementById('statusUpdates');
+  if(!rl)return;
+  const cls={'RNR':'#FF4D4F','Not Interested':'#FA8C16','Switch Off':'#8C8C8C','Others':'#1890FF'};
+  rl.innerHTML=leads.slice(0,6).map(l=>`
+    <div class="activity-item">
+      <div class="activity-dot" style="background:${cls[l.remark]||'#2F6FED'}"></div>
+      <div class="activity-info"><div class="activity-name">${l.name}</div><div class="activity-meta">${l.phone} · ${l.date}</div></div>
+      <div class="activity-badge">${remarkBadge(l.remark)}</div>
+    </div>`).join('');
+  if(su)su.innerHTML=leads.slice(0,6).map(l=>`
+    <div class="activity-item">
+      <div class="activity-dot" style="background:#2F6FED"></div>
+      <div class="activity-info"><div class="activity-name">${l.staff} updated ${l.name}</div><div class="activity-meta">Status → ${l.remark} · ${l.date}</div></div>
+    </div>`).join('');
+}
+
+/* ─── EXPORT ─── */
+function exportExcel(){showToast('Exporting to Excel…','info');setTimeout(()=>showToast('Export complete! 📥','success'),1200);}
+
+/* ─── GLOBAL SEARCH ─── */
+function globalSearch(v){
+  if(!v)return;
+  showPage('leads',document.querySelectorAll('.nav-item')[1]);
+  document.getElementById('leadSearch').value=v;
+  filterLeads();
+}
+
+/* ─── CHARTS ─── */
+let chartsInit=false;
+function initCharts(){
+  if(chartsInit)return;chartsInit=true;
+  const colors=['#FF4D4F','#FA8C16','#8C8C8C','#1890FF'];
+  const labels=['RNR','Not Interested','Switch Off','Others'];
+  const data=[8,5,4,7];
+  const gridColor=()=>getComputedStyle(document.documentElement).getPropertyValue('--border').trim()||'#e5e9f0';
+
+  // Donut
+  new Chart(document.getElementById('donutChart'),{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:0,hoverOffset:6}]},options:{cutout:'72%',plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{family:'Poppins',size:11},color:'#6b7280'}},tooltip:{callbacks:{label:function(c){return ` ${c.label}: ${c.raw} leads`;}}}},animation:{animateScale:true}}});
+
+  // Bar
+  const staffNames=['Logeshwari HR','Divya HR','Harish','Arul VB'];
+  const staffData=[8,7,5,4];
+  new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:staffNames,datasets:[{label:'Leads',data:staffData,backgroundColor:colors,borderRadius:8,borderSkipped:false}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,0.05)'},ticks:{font:{family:'Poppins',size:11}}},x:{grid:{display:false},ticks:{font:{family:'Poppins',size:11}}}},animation:{duration:1000}}});
+
+  // Line
+  const days=['Jan 2','Jan 3','Jan 4','Jan 5','Jan 6','Jan 7','Jan 8','Jan 9','Jan 10','Jan 11','Jan 12','Jan 13','Jan 14','Jan 15'];
+  const dData=[2,3,1,4,2,5,3,4,6,3,5,4,7,6];
+  new Chart(document.getElementById('lineChart'),{type:'line',data:{labels:days,datasets:[{label:'Leads',data:dData,borderColor:'#2F6FED',backgroundColor:'rgba(47,111,237,0.08)',tension:0.4,fill:true,pointBackgroundColor:'#2F6FED',pointRadius:4,pointHoverRadius:6}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,0.05)'},ticks:{font:{family:'Poppins',size:11}}},x:{grid:{display:false},ticks:{font:{family:'Poppins',size:11},maxRotation:0,maxTicksLimit:7}}},animation:{duration:1200}}});
+}
+
+let reportChartsInit=false;
+function initReportCharts(){
+  if(reportChartsInit)return;reportChartsInit=true;
+  const colors=['#FF4D4F','#FA8C16','#8C8C8C','#1890FF'];
+  new Chart(document.getElementById('reportPie'),{type:'pie',data:{labels:['RNR','Not Interested','Switch Off','Others'],datasets:[{data:[8,5,4,7],backgroundColor:colors,borderWidth:0}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{family:'Poppins',size:11}}}},animation:{animateScale:true}}});
+  new Chart(document.getElementById('reportBar'),{type:'bar',data:{labels:['Logeshwari HR','Divya HR','Harish','Arul VB'],datasets:[{label:'Total',data:[8,7,5,4],backgroundColor:'#2F6FED',borderRadius:8,borderSkipped:false}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,0.05)'},ticks:{font:{family:'Poppins',size:11}}},x:{grid:{display:false},ticks:{font:{family:'Poppins',size:11}}}}}});
+  const months=['Sep','Oct','Nov','Dec','Jan'];
+  new Chart(document.getElementById('reportLine'),{type:'line',data:{labels:months,datasets:[{label:'Leads',data:[14,18,22,20,24],borderColor:'#2F6FED',backgroundColor:'rgba(47,111,237,0.08)',tension:0.4,fill:true,pointBackgroundColor:'#2F6FED',pointRadius:5}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,0.05)'},ticks:{font:{family:'Poppins',size:11}}},x:{grid:{display:false},ticks:{font:{family:'Poppins',size:11}}}}}});
+}
+
+/* ─── CHART BTN TOGGLE ─── */
+document.querySelectorAll('.chart-actions').forEach(g=>{
+  g.querySelectorAll('.chart-btn').forEach(b=>{
+    b.addEventListener('click',()=>{g.querySelectorAll('.chart-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');});
+  });
+});
+
+/* ─── PW TOGGLE ─── */
+document.querySelectorAll('.pw-toggle').forEach(t=>{
+  t.addEventListener('click',function(){
+    const inp=this.previousElementSibling;
+    if(inp.type==='password'){inp.type='text';this.className='fas fa-eye-slash pw-toggle';}
+    else{inp.type='password';this.className='fas fa-eye pw-toggle';}
+  });
+});
+
+/* ─── KEYBOARD SHORTCUTS ─── */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active'));}
+  if(e.ctrlKey&&e.key==='n'&&document.getElementById('app').classList.contains('visible')){e.preventDefault();openAddModal();}
+});
+
+/* ─── OVERLAY CLOSE ─── */
+document.querySelectorAll('.modal-overlay').forEach(o=>{
+  o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('active');});
+});
+</script>
+</body>
+</html>
